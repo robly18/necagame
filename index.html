@@ -1,11 +1,41 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
     <head>
-
+        <meta charset="utf-8"/>
+        <style>
+            html, body {
+                height : 90%;
+            }
+            h1.console {
+                font-family:"courier";
+                color:white;
+            }
+            p.console {
+                font-family:"courier";
+                color:white;
+                margin:3px;
+            }
+            div.console {
+                width:90%;
+                height:85%;
+                border-width:6px;
+                border-style:solid;
+                border-color:white;
+            }
+        </style>
     </head>
 
-    <body>
-        <h1>This will someday be a gift!</h1>
+    <body bgcolor=black>
+        <h1 class="console">NASA HACKING TERMINAL (Written in Pascal)</h1>
+        <div class="console" id="cnsl">
+            <p class="console">THIS IS A TEST MATE</p>
+            <p class="console">BLAH BLAH BLAH THIS IS AN OVERLY LONG LINE THAT WILL SURELY NOT FIT ON A SINGLE SCREEN AM I RIGHT</p>
+        </div>
+
+        <input type="text" id="command" style="width:50%"/>
+        <button onclick="submitText()">SUBMIT</button>
+
     </body>
 
 </html>
