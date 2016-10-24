@@ -6,14 +6,8 @@ function getCnsl() {
     return _cnsl;
 }
 
-function unsafeGetCommand() {
-    let txt = document.getElementById("command").value;
-    document.getElementById("command").value = "";
-    return txt;
-}
-
-function safeGetCommand() {
-    return unsafeGetCommand()
+function escape(txt) {
+    return txt
          .replace(/&/g, "&amp;")
          .replace(/</g, "&lt;")
          .replace(/>/g, "&gt;")
@@ -21,14 +15,40 @@ function safeGetCommand() {
          .replace(/'/g, "&#039;");
 }
 
-function unsafeInsertText(txt) {
+function unsafeGetCommand() {
+    let txt = document.getElementById("command").value;
+    document.getElementById("command").value = "";
+    return txt;
+}
+
+function safeGetCommand() {
+    return escape(unsafeGetCommand())
+}
+
+function unsafeInsertText(txt, style) {
     let cnsl = getCnsl();
-    cnsl.innerHTML += "<p class=\"console\">" + txt + "</p>";
+    if (!style) style = 'console';
+    cnsl.innerHTML += "<p class=\"" + style + "\">" + txt + "</p>";
     cnsl.scrollTop = cnsl.scrollHeight;
 }
 
+function safeInsertText(txt, style) {
+    unsafeInsertText(escape(txt), style)
+}
+
+var log = safeInsertText;
+
+var _blocked = true;
+function blockConsole() {_blocked = true;};
+function unblockConsole() {_blocked = false;};
+
 function submitText() {
-    unsafeInsertText("USER> " + safeGetCommand());
+    if (_blocked) return false;
+    let txt = safeGetCommand();
+    if (txt) {
+        unsafeInsertText("USER> " + txt);
+        act(txt);
+    }
     return false;
 }
 
