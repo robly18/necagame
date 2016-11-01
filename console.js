@@ -32,8 +32,8 @@ function unsafeInsertText(txt, style) {
     cnsl.scrollTop = cnsl.scrollHeight;
 }
 
-function safeInsertText(txt, style) {
-    unsafeInsertText(escape(txt), style)
+function safeInsertText(txt, style, font) {
+    unsafeInsertText(escape(txt), style, font)
 }
 
 var log = safeInsertText;
@@ -42,11 +42,16 @@ var _blocked = true;
 function blockConsole() {_blocked = true;};
 function unblockConsole() {_blocked = false;};
 
+var _userStyle = "console";
+function setUserStyle(style) {
+    _userStyle = style;
+}
+
 function submitText() {
     if (_blocked) return false;
     let txt = safeGetCommand();
     if (txt) {
-        unsafeInsertText("USER> " + txt);
+        unsafeInsertText("USER> " + txt, _userStyle);
         act(txt);
     }
     return false;
